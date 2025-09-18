@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI版 IME</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'BIZ UDPGothic', Meiryo, sans-serif; background-color: #f0f0f0; margin: 0; padding: 20px; user-select: none; }
+        .container { max-width: 760px; margin: 0 auto; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { text-align: center; color: #333; }
+        #ime-box { border: 1px solid #ccc; border-radius: 6px; min-height: 100px; padding: 10px; font-size: 1.2em; line-height: 1.6; cursor: text; white-space: pre-wrap; } /* white-spaceを追加 */
+        #ime-box:focus { border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.25); outline: none; }
+        #ime-box .confirmed { color: #111; }
+        #ime-box .pending-hiragana { color: #555; text-decoration: underline; text-decoration-style: dotted; }
+        #ime-box .pending-romaji { color: #999; }
+        #ime-box .conversion { background-color: #007bff; color: white; border-radius: 3px; }
+        
+        .cursor {
+            display: inline-block;
+            width: 1px;
+            height: 1.2em;
+            background-color: #333;
+            animation: blink-caret 1s step-end infinite;
+            vertical-align: bottom;
+            /* ★★★ カーソルが文字と文字の間に来るように調整 ★★★ */
+            margin: 0 -0.5px;
+        }
+        @keyframes blink-caret { from, to { background-color: transparent; } 50% { background-color: #333; } }
+
+        #candidates-box { display: none; list-style-type: none; padding: 5px; margin: 8px 0 0 0; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        #candidates-box li { padding: 8px 12px; border-radius: 4px; font-size: 1em; cursor: default; }
+        #candidates-box li.selected { background-color: #007bff; color: white; }
+
+        #status { margin-top: 15px; padding: 10px; background-color: #e9ecef; border-radius: 6px; font-size: 0.9em; color: #495057; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GUI版 リアルタイムIME</h1>
+        <div id="ime-box" tabindex="0"></div>
+        <ul id="candidates-box"></ul>
+        <div id="status">初期化中...</div>
+    </div>
+    <script src="./renderer.js"></script>
+</body>
+</html>
+
